@@ -18,7 +18,7 @@ class Game {
         this.currentPlayer = this.players[0]
     }
 
-    private dispathcEvent = (type: EventTypes, payload: PayloadType) => {
+    private dispathcEvent = (type: EventTypes, payload: PayloadType): void => {
 
         if(this.ended) return
 
@@ -48,7 +48,7 @@ class Game {
 
     }
 
-    play = (intent: string) => {
+    play = (intent: string): void => {
         this.currentPlayer.triggerIntent(intent)
     }
 
@@ -64,7 +64,7 @@ class Game {
         return this.log
     }
 
-    private addIntentToLog = (currentplayer: Player, intent: string) => {
+    private addIntentToLog = (currentplayer: Player, intent: string): void => {
         this.log.push({
             from: currentplayer.id,
             to: this.getNextPlayer().id,
@@ -72,7 +72,7 @@ class Game {
         })
     }
 
-    private setIntentResultToLog = (result: IntentEvaluatedPayloadType) => {
+    private setIntentResultToLog = (result: IntentEvaluatedPayloadType): void => {
         const updatedLog: Log = {...this.log[this.log.length - 1], result: result}
         this.log[this.log.length - 1] = updatedLog
     }
