@@ -40,7 +40,7 @@ describe("game class", () => {
 
     describe("play method", () => {
 
-        beforeAll(() => {
+        beforeEach(() => {
             expectedLog = [{
                 from: playersData[0].id,
                 to: playersData[1].id,
@@ -70,7 +70,7 @@ describe("game class", () => {
         })
 
         describe("on round increase", () => {
-            beforeAll(() => {
+            beforeEach(() => {
                 expectedLog = [{
                     from: playersData[0].id,
                     to: playersData[1].id,
@@ -79,8 +79,7 @@ describe("game class", () => {
                         bulls: 2,
                         cows: 1
                     }
-                }]
-                expectedLog = [{
+                },{
                     from: playersData[1].id,
                     to: playersData[0].id,
                     intent: "6789",
@@ -105,5 +104,23 @@ describe("game class", () => {
             })
         })
 
+        describe("on winning intent", () => {
+
+            beforeEach(() => {
+                expectedRound = 2
+                expecterPlayerId = playersData[1].id
+                game.play("4321")
+                game.play("1234")
+            })
+
+            it("should ended the game", () => {
+                expect(game.ended).toBeTruthy()
+            })
+            it("should update the winner", () => {
+                expect(game.getWinner()).toBeTruthy()
+                expect(game.getWinner()!.id).toEqual(playersData[0].id)
+            })
+
+        })
     })
 })

@@ -18,12 +18,29 @@ class Game {
         this.currentPlayer = this.players[0]
     }
 
+    play = (intent: string): void => {
+        this.currentPlayer.triggerIntent(intent)
+    }
+    
+    getCurrentPlayer = (): string => {
+        return this.currentPlayer.id  
+    }
+    
+    getWinner = (): Player | null => {
+        return this.winner
+    }
+    
+    getLog = (): Log[] => {
+        return this.log
+    }
+    
     private dispathcEvent = (type: EventTypes, payload: PayloadType): void => {
 
         if(this.ended) return
-
+        
         switch (type) {
             case "intent": {
+                this.turn ++
                 const intent = (payload as IntentPayloadType).intent
                 const nextPlayer = this.getNextPlayer()
                 this.addIntentToLog(this.currentPlayer ,intent)
@@ -37,7 +54,6 @@ class Game {
                     this.onGameEnded()
                     return
                 }
-                this.turn ++
                 this.setNextPlayer()
                 break
             }
@@ -45,23 +61,6 @@ class Game {
                 return
             }
         }
-
-    }
-
-    play = (intent: string): void => {
-        this.currentPlayer.triggerIntent(intent)
-    }
-
-    getCurrentPlayer = (): string => {
-        return this.currentPlayer.id  
-    }
-
-    getWinner = (): Player | null => {
-        return this.winner
-    }
-
-    getLog = (): Log[] => {
-        return this.log
     }
 
     private addIntentToLog = (currentplayer: Player, intent: string): void => {
@@ -81,19 +80,16 @@ class Game {
         if ((this.turn % this.players.length) === 0) {
             this.rounds++
         }
-        const nextPlayerIndex = this.turn < this.max_index ? this.players.indexOf(this.currentPlayer) + 1 : this.turn - (this.rounds * this.max_index) 
-
+        const nextPlayerIndex = this.turn <= this.max_index ? this.players.indexOf(this.currentPlayer) + 1 : this.turn - (this.rounds * this.max_index) 
         this.currentPlayer = this.players[nextPlayerIndex]
     }
 
     private getNextPlayer = (): Player => {
         let rounds = this.rounds
-        if (!(this.turn % this.max_index)) {
+        if ((this.turn % this.players.length) === 0) {
             rounds++
         }
-
-        const nextPlayerIndex = this.turn < this.max_index ? this.players.indexOf(this.currentPlayer) + 1 : this.turn - (this.rounds * this.max_index) 
-        
+        const nextPlayerIndex = this.turn <= this.max_index ? this.players.indexOf(this.currentPlayer) + 1 : this.turn - (rounds * this.max_index) 
         return this.players[nextPlayerIndex]
     }
 

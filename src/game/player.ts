@@ -9,11 +9,11 @@ class Player {
     constructor(id: string, secret: string, dispatchEvent: (type: EventTypes, payload: PayloadType) => void){
         this.id = id
         this.dispatchEvent = dispatchEvent
-        this.secret = this.convertToArry(secret)
+        this.secret = this.convertToArray(secret)
     }
 
     evaluateIntent(intent: string): void {
-        const result = this.evaluate(this.convertToArry(intent))
+        const result = this.evaluate(this.convertToArray(intent))
         this.dispatchEvent("intentEvaluated", result)
     }
 
@@ -26,8 +26,12 @@ class Player {
         let cows = 0
 
         this.secret.forEach((digit, index) => {
-            if(intent.indexOf(digit) === index) bulls++;
-            else if(intent.indexOf(digit) !== -1 ) cows++;
+            if(intent.indexOf(digit) === index){
+                bulls++
+            }
+            else if(intent.indexOf(digit) !== -1 ){
+                cows++
+            }
         })
 
         return {
@@ -36,9 +40,9 @@ class Player {
         }
     }
 
-    private convertToArry (string: string): number[] {
-        const numberArry = [...string].map(digit => Number(digit))
-        return numberArry
+    private convertToArray (string: string): number[] {
+        return [...string].map(digit => Number(digit))
+
     }
 }
 
