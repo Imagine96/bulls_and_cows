@@ -29,7 +29,7 @@ describe("game class", () => {
     })
 
     it("should start with correct state", () => {
-        expect(game.currentPlayer.id).toEqual(expecterPlayerId)
+        expect(game.getCurrentPlayer()).toEqual(expecterPlayerId)
         expect(game.max_index).toEqual(1)
         expect(game.ended).toBeFalsy()
         expect(game.getWinner()).toBeFalsy()
@@ -61,13 +61,13 @@ describe("game class", () => {
         })
 
         it("should pass turn", () => {
-            expect(game.currentPlayer.id).toEqual(expecterPlayerId)
+            expect(game.getCurrentPlayer()).toEqual(expecterPlayerId)
             expect(game.turn).toEqual(expectedTurn)
         })
 
         it("should not update round", () => {
             expect(game.rounds).toEqual(expectedRound)
-        }) 
+        })
 
         describe("on round increase", () => {
             beforeAll(() => {
@@ -99,9 +99,9 @@ describe("game class", () => {
             })
             it("should update the log", () => {
                 expect(game.getLog()).toEqual(expectedLog)
-            }) 
+            })
             it("should reset currentPlayer to the first player", () => {
-                expect(game.currentPlayer.id).toEqual(expecterPlayerId)
+                expect(game.getCurrentPlayer()).toEqual(expecterPlayerId)
             })
         })
 

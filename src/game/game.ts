@@ -4,7 +4,7 @@ import { EventTypes, PayloadType, IntentPayloadType, IntentEvaluatedPayloadType,
 class Game {
 
     private players: Player[];
-    currentPlayer: Player;
+    private currentPlayer: Player;
     max_index: number;
     turn: number = 0;
     rounds: number = 1;
@@ -50,6 +50,10 @@ class Game {
 
     play = (intent: string) => {
         this.currentPlayer.triggerIntent(intent)
+    }
+
+    getCurrentPlayer = (): string => {
+        return this.currentPlayer.id  
     }
 
     getWinner = (): Player | null => {
