@@ -1,4 +1,4 @@
-import { Log, PlayerData } from "@types";
+import { Log, PlayerData } from "../utils/types";
 import Game from "../game/game";
 
 describe("game class", () => {
