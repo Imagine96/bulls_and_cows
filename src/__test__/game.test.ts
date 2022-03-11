@@ -20,6 +20,10 @@ describe("game class", () => {
                 id: "player_2_Id",
                 secret: "1234"
             },
+            {
+                id: "player_3_Id",
+                secret: "1234"
+            }
         ]
         game = new Game(playersData)
         expectedRound = 1
@@ -30,7 +34,7 @@ describe("game class", () => {
 
     it("should start with correct state", () => {
         expect(game.getCurrentPlayer()).toEqual(expecterPlayerId)
-        expect(game.max_index).toEqual(1)
+        expect(game.max_index).toEqual(playersData.length - 1)
         expect(game.ended).toBeFalsy()
         expect(game.getWinner()).toBeFalsy()
         expect(game.getLog()).toEqual(expectedLog)
@@ -79,8 +83,16 @@ describe("game class", () => {
                         bulls: 2,
                         cows: 1
                     }
-                },{
+                }, {
                     from: playersData[1].id,
+                    to: playersData[2].id,
+                    intent: "6789",
+                    result: {
+                        bulls: 0,
+                        cows: 0
+                    },
+                }, {
+                    from: playersData[2].id,
                     to: playersData[0].id,
                     intent: "6789",
                     result: {
@@ -91,12 +103,14 @@ describe("game class", () => {
                 expectedRound = 2
                 expecterPlayerId = playersData[0].id
                 game.play("6789")
+                game.play("6789")
             })
 
             it("should increase the round", () => {
                 expect(game.rounds).toEqual(expectedRound)
             })
             it("should update the log", () => {
+
                 expect(game.getLog()).toEqual(expectedLog)
             })
             it("should reset currentPlayer to the first player", () => {
@@ -109,7 +123,8 @@ describe("game class", () => {
             beforeEach(() => {
                 expectedRound = 2
                 expecterPlayerId = playersData[1].id
-                game.play("4321")
+                game.play("6789")
+                game.play("6789")
                 game.play("1234")
             })
 

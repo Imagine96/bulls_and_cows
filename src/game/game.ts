@@ -80,17 +80,12 @@ class Game {
         if ((this.turn % this.players.length) === 0) {
             this.rounds++
         }
-        const nextPlayerIndex = this.turn <= this.max_index ? this.players.indexOf(this.currentPlayer) + 1 : this.turn - (this.rounds * this.max_index) 
-        this.currentPlayer = this.players[nextPlayerIndex]
+        this.currentPlayer = this.getNextPlayer()
     }
 
     private getNextPlayer = (): Player => {
-        let rounds = this.rounds
-        if ((this.turn % this.players.length) === 0) {
-            rounds++
-        }
-        const nextPlayerIndex = this.turn <= this.max_index ? this.players.indexOf(this.currentPlayer) + 1 : this.turn - (rounds * this.max_index) 
-        return this.players[nextPlayerIndex]
+        const nextIndex = this.players.indexOf(this.currentPlayer) === this.players.length - 1 ? 0 : this.players.indexOf(this.currentPlayer) + 1
+        return this.players[nextIndex]
     }
 
     private onGameEnded = (): void => {
