@@ -1,5 +1,5 @@
 import Player from "../game/player"
-import { PayloadType, EventTypes } from "@types"
+import { PayloadType, EventTypes } from "../utils/types"
 
 let dispatch: jest.Mock<any, any>
 
